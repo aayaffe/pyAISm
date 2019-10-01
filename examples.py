@@ -16,11 +16,11 @@ def decode_file_example():
                 ais_format = pyAISm.format_ais(ais_data)  # A more human readable dictionnary
                 print(ais_format)  # Accessing the value of the key
             except pyAISm.UnrecognizedNMEAMessageError as e:
-                print e
+                print (e)
             except pyAISm.BadChecksumError as e:
-                print e
+                print (e)
             except Exception as e:
-                print e
+                print (e)
         print('End of file')
 
 
@@ -49,7 +49,7 @@ def count_message_types_example():
             except pyAISm.BadChecksumError as e:
                 pass
             except Exception as e:
-                print e
+                print (e)
         print('End of file')
         print(message_types)
 
@@ -73,9 +73,10 @@ def decode_stream_example():
                 ais_format = pyAISm.format_ais(ais_data)  # A more human readable dictionnary
                 print(ais_format)  # Accessing the value of the key
             except pyAISm.UnrecognizedNMEAMessageError as e:
-                print e
+                print (e)
             except pyAISm.BadChecksumError as e:
-                print e
+                print (e)
             except Exception as e:
-                print e
+                print (e)
 
+decode_stream_example()

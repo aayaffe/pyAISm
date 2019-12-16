@@ -15,6 +15,8 @@ class Ship:
     name = "Unknown"
     heading = -1
     coord = (-1000, -1000)
+    shiptype = "Not available"
+    aid_type = "Unknown"
 
 
 def to_point_entity(ais_data):
@@ -34,12 +36,20 @@ def to_point_entity(ais_data):
     ship.name = "Unknown"
     if 'shipname' in ais_data:
         ship.name = ais_data['shipname']
+    if 'shiptype' in ais_data:
+        ship.shiptype = pyAISm.format_ais(ais_data)['shiptype']
+    if 'aid_type' in ais_data:
+        ship.aid_type = pyAISm.format_ais(ais_data)['aid_type']
     if ship.mmsi in ships_dict:
         if ship.name == "Unknown" and ships_dict[ship.mmsi].name!="Unknown":
             ship.name = ships_dict[ship.mmsi].name
+        if ship.shiptype == "Not available" and ships_dict[ship.mmsi].shiptype != "Not available":
+            ship.shiptype = ships_dict[ship.mmsi].shiptype
+        if ship.aid_type == "Unknown" and ships_dict[ship.mmsi].aid_type!="Unknown":
+            ship.aid_type = ships_dict[ship.mmsi].aid_type
     ships_dict[ship.mmsi] = ship
     point = Point(ship.coord)
-    feature = Feature(geometry=point, properties={"id": ship.mmsi, "cog": ship.cog, "sog":ship.sog, "heading": ship.heading, "name": ship.name})
+    feature = Feature(geometry=point, properties={"id": ship.mmsi, "cog": ship.cog, "sog":ship.sog, "heading": ship.heading, "name": ship.name, "shiptype": ship.shiptype, "aid_type" : ship.aid_type})
     return feature
 
 
@@ -70,10 +80,10 @@ def decode_stream_example():
                     update_json_dict(ais_data['mmsi'], entity_json)
                 else:
                     continue
-                with open('C:\programing\Kamashomat\data.json', 'w', encoding='utf-8') as f:
+                with open('/home/aayaffe/programing/Kamashomat/data.json', 'w', encoding='utf-8') as f:
                     f.write(to_json_file(json_dict))
-                if ais_data['type'] == 5 or ais_data['type'] == 19 or ais_data['type'] == 24:
-                    print("Message type: %d", ais_data['type'])
+                # if ais_data['type'] == 5 or ais_data['type'] == 19 or ais_data['type'] == 24 or ais_data['type'] == 21:
+                #     print("Message type: ", ais_data['type'])
                 print(entity_json)  # Accessing the value of the key
             except pyAISm.UnrecognizedNMEAMessageError as e:
                 pass
@@ -116,4 +126,4 @@ def decode_file_example():
 
 
 
-decode_file_example()
+decode_stream_example()

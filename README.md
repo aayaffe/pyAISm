@@ -4,7 +4,7 @@ A small and incomplete python decoder for AIS messaging.
 
 A bunch of naive pythons functions to decode somes ais_data/AIVDM messages:
 
-Based on the doc here: (http://catb.org/gpsd/AIVDM.html).
+Based on the doc here: (https://gpsd.gitlab.io/gpsd/AIVDM.html).
 
 ## How to use it
 In python 2 console:
